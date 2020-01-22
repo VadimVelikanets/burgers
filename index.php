@@ -11,52 +11,67 @@
   </head>
   <body>
 
-    <?php 
-
-
-    require('./connect.php');
-    if( isset($_POST['name']) && isset($_POST['email']) && isset($_POST['phone']) && isset($_POST['street']) && isset($_POST['home']) && isset($_POST['part']) && isset($_POST['appt']) && isset($_POST['floor']) && isset($_POST['comment']))
-    {
-
-      $name = $_POST['name'];
-      $email = $_POST['email'];
-      $phone = $_POST['phone'];
-
-      $street = $_POST['street'];
-      $home = $_POST['home'];
-      $part = $_POST['part'];
-      $appt = $_POST['appt'];
-      $floor = $_POST['floor'];
-      $comment = $_POST['comment'];
-
-      $query = "INSERT INTO users (  name, email, phone) VALUES ('$name' ,  '$email' ,  '$phone')";
-      $result = mysqli_query($connection, $query);
-
-
-      $last_id = mysqli_insert_id($connection);
-     
-      $query2 = "INSERT INTO orders (id_users, street, house, corps, flat, flour, comment) VALUES ('$last_id', '$street' ,  '$home',  '$part', '$appt', '$floor', '$comment')";
-      $result2 = mysqli_query($connection, $query2);
-
-      if($result)
-      {
-        $success = 'Ваш заказ успешно принят!';
-      } else{
-        $error = 'Произошла ошибка, повторите попытку!';
-      }
-
-    };
-
-    
-
-       
-  
-  
-      
-    
+    <?php
+    include_once './connect.php';
 
   ?>
-
+<!--    --><?php
+//
+//
+//    require('./connect.php');
+//    if( isset($_POST['name']) && isset($_POST['email']) && isset($_POST['phone']) && isset($_POST['street']) && isset($_POST['home']) && isset($_POST['part']) && isset($_POST['appt']) && isset($_POST['floor']) && isset($_POST['comment']))
+//    {
+//
+//        $name = $_POST['name'];
+//        $email = $_POST['email'];
+//        $phone = $_POST['phone'];
+//
+//        $street = $_POST['street'];
+//        $home = $_POST['home'];
+//        $part = $_POST['part'];
+//        $appt = $_POST['appt'];
+//        $floor = $_POST['floor'];
+//        $comment = $_POST['comment'];
+//
+//        $result = mysqli_query($connection, "SELECT email FROM users WHERE email = '$email'");
+//
+//        if(mysqli_num_rows($result) <= 0){
+//            $result = mysqli_query($connection, "INSERT INTO users (email) VALUES ($email)");
+//            $query = "INSERT INTO users (name, email, phone) VALUES ('$name' ,  '$email' ,  '$phone')";
+//            $result = mysqli_query($connection, $query);
+//
+//            $last_id = mysqli_insert_id($connection);
+//
+//            $query2 = "INSERT INTO orders (id_users, street, home, part, appt, floor, comment) VALUES ('$last_id', '$street' ,  '$home',  '$part', '$appt', '$floor', '$comment')";
+//            $result2 = mysqli_query($connection, $query2);
+//
+//            if($result)
+//            {
+//                $success = 'Ваш заказ успешно принят! Ваши данные регистрированны!';
+//            } else{
+//                $error = 'Произошла ошибка, повторите попытку!';
+//            }
+//        }
+//        else{
+//
+//            $id = mysqli_query($connection, "SELECT id_users FROM users WHERE email = '$email'");
+//            $res = mysqli_fetch_array($id);
+//            $result = mysqli_query($connection, "INSERT INTO orders (id_users, street, home, part, appt, floor, comment) VALUES ('$res[id_users]',  '$street' ,  '$home',  '$part', '$appt', '$floor', '$comment')");
+//            if($result)
+//            {
+//                $success = 'Вы уже зарегистрированны! Спасибо за заказ!';
+//            } else{
+//                $error = 'Произошла ошибка, повторите попытку!';
+//            }
+//
+//        }
+//
+//
+//
+//
+//    };
+//
+//    ?>
     <div class="wrapper">
       <div class="maincontent">
         <section class="section hero">
@@ -487,8 +502,7 @@
                     </div>
                   </div>
                       <?php if(isset($success)) { ?> <h3 style="color: #fff;"><?php echo $success; ?><h3> <?php } ?> 
-                     <?php if(isset($error)) { ?> <h3 style="color: red;"><?php echo $error; ?><h3> <?php } ?> 
-                  
+                     <?php if(isset($error)) { ?> <h3 style="color: red;"><?php echo $error; ?><h3> <?php } ?>
                 </div>
               </form>
             </div>
@@ -552,6 +566,7 @@
     </div>
 
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
-
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="./js/common.js"></script> -->
   </body>
 </html>
