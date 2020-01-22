@@ -60,23 +60,36 @@
 			$cout_user = mysqli_query($connection, "SELECT id_users FROM orders WHERE id_users = '$res[id_users]'");
 			//echo mysqli_num_rows($cout_user);
 			$countOrders = mysqli_num_rows($cout_user);
+			// Номер заказа
+			$max_order = mysqli_query($connection, "SELECT MAX(id_order) FROM orders");
+			$id_order = mysqli_fetch_array($max_order);
+			$numb_order = $id_order['MAX(id_order)'];
 
 
-				$to = 'velikanets@mail.ru'; //Почта получателя, через запятую можно указать сколько угодно адресов
-				$subject = 'Обратный звонок'; //Загаловок сообщения
-				$message = '
+				if($countOrders > 1 )
+				{
+					$thanks = "Спасибо! Это уже $countOrders заказ";
+				}
+				else{
+					$thanks = 'Спасибо - это ваш первый заказ';
+				};
+
+				$message = "
                     <html>
                         <head>
-                            <title>' . $subject . '</title>
+                            <title>Заказ доставки</title>
                         </head>
                         <body>
-                            <p>Name: "$res[id_users]"</p>
+                            Заказ - $numb_order <br>
+								Ваш заказ будет доставлен по адресу: Улица $street, дом $home, корпус  $part, квартира $appt, этаж $floor <br>
+								DarkBeefBurger за 500 рублей, 1 шт, <br>
+								 $thanks
 
                         </body>
-                    </html>'; //Текст нащего сообщения можно использовать HTML теги
-				$headers = "Content-type: text/html; charset=utf-8 \r\n"; //Кодировка письма
-				$headers .= "From: Отправитель <from@example.com>\r\n"; //Наименование и почта отправителя
-				mail($to, $subject, $message, $headers); //Отправка письма с помощью функции mail
+                    </html>"; //Текст нащего сообщения можно использовать HTML теги
+                 $headers = "Content-type: text/html; charset=utf-8 \r\n"; 
+    			$headers .= "From: Velikanets <velikanets@mail.ru>\r\n"; 
+				mail($email, "Заказ доставки", $message, $headers);
 		};
 
 		header("Location: /burgers");
